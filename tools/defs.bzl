@@ -138,8 +138,8 @@ def go_imports(name, src, out):
         name = name,
         srcs = [src],
         outs = [out],
-        tools = ["@org_golang_x_tools//cmd/goimports:goimports"],
-        cmd = ("$(location @org_golang_x_tools//cmd/goimports:goimports) $(SRCS) > $@"),
+        tools = ["@org_golang_x_tools//cmd/goimports:goimports", "@go_sdk//:go"],
+        cmd = ("export PATH=$(dirname $(location @go_sdk//:go)):$PATH && $(location @org_golang_x_tools//cmd/goimports:goimports) $(SRCS) > $@"),
     )
 
 def go_library(name, srcs, deps = [], imports = [], stateify = True, force_add_state_pkg = False, marshal = False, marshal_debug = False, nogo = True, **kwargs):
